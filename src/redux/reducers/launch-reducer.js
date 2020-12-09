@@ -1,4 +1,4 @@
-import { GET_LAUNCH } from "../types";
+import { SET_LAUNCH_DATA } from "../types";
 
 const initialState = {
   data: [],
@@ -7,7 +7,7 @@ const initialState = {
 const launchReducer = (state = initialState, action) => {
   // console.log("ACTION", action.payload)
   switch (action.type) {
-    case GET_LAUNCH:
+    case SET_LAUNCH_DATA:
       return {
         ...state,
         data: action.payload.data,

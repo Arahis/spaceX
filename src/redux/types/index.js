@@ -1,1 +1,2 @@
-export const GET_LAUNCH = "GET_LAUNCH";
+export const SET_LAUNCH_DATA = "SET_LAUNCH_DATA";
+export const FETCH_LAUNCH_DATA = "FETCH_LAUNCH_DATA";

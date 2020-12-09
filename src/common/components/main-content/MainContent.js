@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout, Divider, Skeleton, Card, Avatar } from "antd";
-import { getLaunch } from "../../../redux/actions";
+import { fetchLaunch } from "../../../redux/actions";
 import { getLaunchData } from "../../../redux/selectors";
 
 const { Content } = Layout;
@@ -12,7 +12,7 @@ const MainContent = () => {
   const launchData = useSelector(getLaunchData);
 
   useEffect(() => {
-    dispatch(getLaunch());
+    dispatch(fetchLaunch());
   }, [dispatch]);
   return (
     <Content>
