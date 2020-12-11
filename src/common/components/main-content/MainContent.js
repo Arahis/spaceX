@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Layout, Divider, Skeleton, Card, Avatar } from "antd";
-import { fetchLaunch } from "../../../redux/actions";
+import { Layout, Button } from "antd";
+import { fetchLaunch, fetchMoreLaunches } from "../../../redux/actions";
 import { getLaunchData } from "../../../redux/selectors";
+import { LaunchList } from "../launch-list";
 
 const { Content } = Layout;
-const { Meta } = Card;
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -15,98 +15,16 @@ const MainContent = () => {
   useEffect(() => {
     dispatch(fetchLaunch());
   }, [dispatch]);
-  console.log("upcoming", upcoming);
+
+  const handleLoading = useCallback(() => {
+    dispatch(fetchMoreLaunches());
+  }, [dispatch]);
+
   return (
     <Content>
-      <Divider plain>Upcoming</Divider>
-      {upcoming &&
-        upcoming.map(
-          (
-            {
-              mission_name,
-              flight_number,
-              launch_success,
-              launch_date_utc,
-              details,
-              links: { mission_patch, article_link, video_link },
-            },
-            index
-          ) => {
-            return (
-              <Card key={index} style={{ width: 800, marginTop: 16 }}>
-                <Meta
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                />
-                <p>{mission_name}</p>
-                <img
-                  src={mission_patch}
-                  alt="mission_patch"
-                  style={{ width: 50 }}
-                />
-                <p>{flight_number}</p>
-                {launch_success == null ? (
-                  <p>UNKNOWN</p>
-                ) : (
-                  <p>{launch_success}</p>
-                )}
-                <p>Launch Date: {launch_date_utc}</p>
-                {details ? <p>{details}</p> : <p>No details yet</p>}
-                <p>Video Link: {video_link}</p>
-                <p>Article Link: {article_link}</p>
-              </Card>
-            );
-          }
-        )}
-
-      <Divider plain>History</Divider>
-      {history &&
-        history.map(
-          (
-            {
-              mission_name,
-              flight_number,
-              launch_success,
-              launch_date_utc,
-              details,
-              links: { mission_patch, article_link, video_link },
-            },
-            index
-          ) => {
-            return (
-              <Card key={index} style={{ width: 800, marginTop: 16 }}>
-                <Meta
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                />
-                <p>{mission_name}</p>
-                <img
-                  src={mission_patch}
-                  alt="mission_patch"
-                  style={{ width: 50 }}
-                />
-                <p>{flight_number}</p>
-                {launch_success == null ? (
-                  <p>UNKNOWN</p>
-                ) : (
-                  <p>{launch_success}</p>
-                )}
-                <p>Launch Date: {launch_date_utc}</p>
-                {details ? <p>{details}</p> : <p>No details yet</p>}
-                <p>Video Link: {video_link}</p>
-                <p>Article Link: {article_link}</p>
-              </Card>
-            );
-          }
-        )}
+      <LaunchList title={"Upcoming"} launches={upcoming} />
+      <LaunchList title={"History"} launches={history} />
+      <Button onClick={handleLoading}>Load more</Button>
     </Content>
   );
 };
