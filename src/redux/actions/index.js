@@ -7,8 +7,11 @@ export const fetchLaunch = () => ({
   type: FETCH_LAUNCH_DATA,
 });
 
-export const fetchMoreLaunches = () => ({
+export const fetchMoreLaunches = (page) => ({
   type: FETCH_MORE_LAUNCHES,
+  payload: {
+    page
+  }
 });
 
 export const setLaunchData = (...data) => ({

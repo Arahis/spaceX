@@ -11,7 +11,7 @@ const fetchLaunches = async ({order, sort, limit, offset}) => {
     },
   });
   //   console.log("DATA1", data);
-  return data;
+  return {data, error};
 };
 
 export { fetchLaunches };

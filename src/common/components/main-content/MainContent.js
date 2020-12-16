@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Layout, Button } from "antd";
 import { fetchLaunch, fetchMoreLaunches } from "../../../redux/actions";
 import { LaunchList } from "../launch-list";
+import { pageSelector } from "../../../redux/selectors";
 
 
 const { Content } = Layout;
@@ -10,6 +11,8 @@ const { Content } = Layout;
 const MainContent = () => {
   const dispatch = useDispatch();
   const launchData = useSelector((state) => state.launches);
+  const page = useSelector(pageSelector);
+
   console.log("launchData", launchData);
   const { upcoming, history } = launchData;
 
@@ -18,8 +21,8 @@ const MainContent = () => {
   }, [dispatch]);
 
   const handleLoading = useCallback(() => {
-    dispatch(fetchMoreLaunches());
-  }, [dispatch]);
+    dispatch(fetchMoreLaunches(page));
+  }, [dispatch, page]);
 
   return (
     <Content>
