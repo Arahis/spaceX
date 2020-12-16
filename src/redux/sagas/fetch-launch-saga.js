@@ -1,26 +1,25 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest, select } from "redux-saga/effects";
 import { setLaunchData } from "../actions";
 import { fetchLaunches } from "../../utils/api";
 import { FETCH_LAUNCH_DATA } from "../types";
 import { FETCH_MORE_LAUNCHES } from "../types";
-
-
-
-export const fetchLaunchSaga = function* (limit = 6, offset = 0) {
-  const data = yield call(fetchLaunches, {
-    sort: "launch_date_utc",
-    order: "desc",
-    limit,
-    offset,
-  });
-  const upcomingLaunches = data.filter((launch) => launch.upcoming === true);
-  const historyLaunches = data.filter((launch) => launch.upcoming === false);
-  yield put(setLaunchData(upcomingLaunches, historyLaunches));
-};
+import { pageSelector } from "../selectors";
+import { fetchLaunchSaga } from "./pre-fetch-launch-saga";
 
 export function* watchLaunchSaga() {
-  yield takeLatest(FETCH_LAUNCH_DATA, fetchLaunchSaga());
+  console.log("ololo");
+  yield takeLatest(FETCH_LAUNCH_DATA, function* () {
+    yield call(fetchLaunchSaga);
+  });
 }
+
 export function* watchLaunchMoreSaga() {
-  yield takeEvery(FETCH_MORE_LAUNCHES, fetchLaunchSaga());
+  let page = yield select(pageSelector);
+
+  console.log("props", page, ++page);
+
+  // yield takeLatest(FETCH_MORE_LAUNCHES, console.log("LA page", page));
+  yield takeEvery(FETCH_MORE_LAUNCHES, function* () {
+    yield call(fetchLaunchSaga, page);
+  });
 }

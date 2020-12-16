@@ -1,7 +1,7 @@
 import { all, call } from "redux-saga/effects";
 
-import { fetchLaunchSaga } from "./fetch-launch-saga";
+import { watchLaunchSaga, watchLaunchMoreSaga } from "./fetch-launch-saga";
 
 export default function* rootSaga() {
-  yield call(fetchLaunchSaga);
+  yield all([call(watchLaunchSaga), call(watchLaunchMoreSaga)]);
 }

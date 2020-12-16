@@ -2,6 +2,7 @@ import { prop } from "ramda";
 import { createSelector } from "reselect";
 
 const getLaunch = prop("launches");
-const getData = prop("data");
+const getPage = prop("page");
 
-export const getLaunchData = createSelector(getLaunch, getData);
+export const getLaunchData = createSelector(getLaunch);
+export const pageSelector = createSelector(getLaunch, getPage);
