@@ -1,7 +1,9 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Typography, Skeleton } from "antd";
+import { LinkOutlined, PlayCircleFilled } from "@ant-design/icons";
+import { dataConverter } from "../../../utils/dataConverter";
 
-const { Meta } = Card;
+const { Paragraph } = Typography;
 
 const LaunchItem = ({ launch }) => {
   const {
@@ -11,24 +13,61 @@ const LaunchItem = ({ launch }) => {
     details,
     links: { mission_patch, video_link, article_link },
   } = launch;
+
+  let launchStatus;
+  switch (launch_success) {
+    case null:
+      launchStatus = "unknown";
+      break;
+    case true:
+      launchStatus = "success";
+      break;
+    case false:
+      launchStatus = "failure";
+      break;
+    default:
+      return;
+  }
+
+  const launchDate = dataConverter(launch.launch_date_utc);
   return (
-    <Card style={{ width: 800, marginTop: 16 }}>
-      <Meta
-        cover={
-          <img
-            alt="example"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          />
-        }
-      />
-      <p>{mission_name}</p>
-      <img src={mission_patch} alt="mission_patch" style={{ width: 50 }} />
-      <p>{flight_number}</p>
-      {launch_success == null ? <p>UNKNOWN</p> : <p>{launch_success}</p>}
-      <p>Launch Date: {launch.launch_date_utc}</p>
-      {details ? <p>{details}</p> : <p>No details yet</p>}
-      <p>Video Link: {video_link}</p>
-      <p>Article Link: {article_link}</p>
+    <Card style={{ height: "150px", marginTop: 16 }} className="wrapper">
+      <div className="img-container">
+        {mission_patch ? (
+          <img src={mission_patch} alt="mission_patch" />
+        ) : (
+          <Skeleton.Image />
+        )}
+      </div>
+      <div className="info-container">
+        <div className="card-upper">
+          <p className="flight">#{flight_number}</p>
+          <p className="mission">{mission_name}</p>
+          <p className={`status ${launchStatus}`}>{launchStatus}</p>
+          <a
+            href={article_link}
+            className="article-link"
+            title="Link to the launch article"
+          >
+            <LinkOutlined />
+          </a>
+        </div>
+        <div className="card-lower">
+          <div className="card-lower__info">
+            <p className="date">
+              Launch Date: <b>{launchDate}</b>
+            </p>
+            <Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 0 }}>
+              {details
+                ? details
+                : "Sorry, we do not have any info about this launch. But we are sure soon it will become available."}
+            </Paragraph>
+          </div>
+          <a href={video_link} className="video-link" title="Watch the video">
+            <PlayCircleFilled /> WATCH
+          </a>
+        </div>
+      </div>
     </Card>
   );
 };

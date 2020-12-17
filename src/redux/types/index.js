@@ -1,4 +1,6 @@
 export const SET_LAUNCH_DATA = "SET_LAUNCH_DATA";
 export const FETCH_LAUNCH_DATA = "FETCH_LAUNCH_DATA";
 export const FETCH_MORE_LAUNCHES = "FETCH_MORE_LAUNCHES";
+export const SET_ERROR = "SET_ERROR";
+export const IS_DATA_LOADING = "IS_DATA_LOADING";
 

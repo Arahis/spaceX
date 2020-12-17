@@ -3,7 +3,6 @@ import { Divider, Skeleton } from "antd";
 import LaunchItem from "../launch-item/LaunchItem";
 
 const LaunchList = ({ title, launches = [] }) => {
-  console.log("launches", launches);
   return (
     <>
       <Divider plain>{title}</Divider>

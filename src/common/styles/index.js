@@ -1,5 +1,6 @@
-// import './btns-container.scss'
-// import './antd/image-antd.scss'
-// import './antd/spin-antd.scss'
-// import './antd/btn-content-display.scss'
-// import './position-center.scss'
+import "./antd/nav-bar.scss";
+import "./antd/content-wrapper.scss";
+import "./antd/card.scss";
+import "./antd/fetch-button.scss";
+import "./antd/error-container.scss";
+

@@ -1,3 +1,18 @@
-.nav-bar {
+.ant-layout-header.nav-bar {
   background: #fff;
+  line-height: unset;
+  display: flex;
+  align-items: center;
+}
+
+.header-text {
+  margin-left: auto;
+  margin-right: 20px;
+  margin-bottom: 0;
+  color: gray;
+}
+
+.text-bold {
+  font-weight: 600;
+  color: black;
 }
